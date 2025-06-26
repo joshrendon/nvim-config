@@ -1,0 +1,33 @@
+return {
+{
+  "L3MON4D3/LuaSnip",
+  dependencies = {
+    "rafamadriz/friendly-snippets",  -- optional, but has lots of Markdown/code snippets
+  },
+  config = function()
+    require("luasnip.loaders.from_vscode").lazy_load()
+  end,
+  },
+}
+--{
+--  "https://github.com/hrsk7th/nvim-cmp",
+--  dependencies = {
+--    "saadparwaiz1/cmp_luasnip",
+--  },
+--  opts = function(_, opts)
+--    local cmp = require("cmp")
+--    local luasnip = require("luasnip")
+--
+--    opts.snippet = {
+--      expand = function(args)
+--        luasnip.lsp_expand(args.body)
+--      end,
+--    }
+--
+--    -- Add luasnip as a completion source
+--    opts.sources = cmp.config.sources({
+--      { name = "luasnip" },
+--    }, opts.sources or {})
+--  end,
+--  },
+--}
