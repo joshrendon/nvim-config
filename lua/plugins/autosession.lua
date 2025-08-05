@@ -15,7 +15,7 @@ return {
             auto_restore_last_session = false,
             auto_save = true,
             log_level = "info",
-            root_dir = "C:\\Users\\v-jrendon\\AppData\\Local\\nvim-data\\sessions",
+            root_dir = "/Users/josh/.local/share/nvim/sessions",
             suppressed_dirs = { "~/", "~/Downloads", "/" }
         })
 

@@ -1,3 +1,3 @@
 vim.cmd("set termguicolors")
-vim.cmd("set background=light")
-vim.cmd("colorscheme catppuccin-latte")
+vim.cmd("set background=dark")
+vim.cmd("colorscheme onedark")

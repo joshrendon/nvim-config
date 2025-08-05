@@ -1,6 +1,39 @@
 -- File: lua/utils/zk_debug_log.lua
 local M = {}
 
+local log_buf = nil
+local log_win = nil
+
+function M.show()
+  if log_buf and vim.api.nvim_buf_is_valid(log_buf) then
+    return  -- Already showing
+  end
+
+  log_buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_option(log_buf, "filetype", "log")
+  log_win = vim.api.nvim_open_win(log_buf, true, {
+    relative = "editor",
+    width = math.floor(vim.o.columns * 0.6),
+    height = math.floor(vim.o.lines * 0.4),
+    row = math.floor(vim.o.lines * 0.3),
+    col = math.floor(vim.o.columns * 0.2),
+    style = "minimal",
+    border = "double",
+  })
+end
+
+function M.append(msg)
+  if not log_buf then
+    M.show()
+  end
+  local lines = vim.split(msg, "\n", { plain = true })
+  vim.api.nvim_buf_set_lines(log_buf, -1, -1, false, lines)
+end
+
+
+
+--local M = {}
+
 local ring = {}
 local max_entries = 50
 

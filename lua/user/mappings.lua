@@ -25,9 +25,10 @@ vim.keymap.set("n", "<leader>zc", function()
 end, { desc = "ZkCd " })
 
 -- Metadata hover mapping
---vim.keymap.set("n", "<leader>zh", function()
---    require("utils.zk_hover").show_zk_note_metadata()
---end, { desc = "Zk: Show metadata hover" })
+vim.keymap.set("n", "<leader>zh", function()
+    --require("utils.zk_hover").show_zk_note_metadata()
+    require("utils.zk_hover").hover_metadata()
+end, { desc = "Zk: Show metadata hover" })
 
 --vim.keymap.set("n", "K", require("utils.zk_hover").hover, { buffer = true, desc = "ZK hover preview" })
 
@@ -154,7 +155,8 @@ vim.keymap.set("n", "<leader>zt", function()
 end, { desc = "ZkEdit (tabbed)" })
 
 vim.keymap.set("n", "<leader>zd", function()
-    require("utils.zk_debug_log").show_log()
+    --require("utils.zk_debug_log").show_log()
+    require("utils.zk_debug_log").show()
 end, {desc = "ZkDebugLog "})
 
 vim.keymap.set({"i", "s" }, "<Tab>", function()
@@ -168,4 +170,7 @@ vim.keymap.set({"i", "s" }, "<S-Tab>", function()
     and "<Plug>luasnip-jump-prev"
     or "<S-Tab>"
 end, { expr = true, silent =  true })
+
+
+vim.api.nvim_set_keymap("v", "<leader>mi", [[:'<,'>w !llm -m gpt-3.5-turbo "Explain this code"<CR>]], { noremap = true, silent = true })
 

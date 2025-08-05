@@ -1,4 +1,4 @@
-vim.env.ZK_NOTEBOOK_DIR = vim.fn.expand("C:/Users/v-jrendon/zettelkasten")
+vim.env.ZK_NOTEBOOK_DIR = vim.fn.expand("/Users/josh/zettelkasten")
 require("config.lazy")
 require("user.options")
 require("user.mappings")
@@ -56,4 +56,10 @@ require("luasnip.loaders.from_lua").load({
 })
 
 require("luasnip").filetype_extend("markdown", { "markdown" })
+
+vim.api.nvim_create_user_command("ZkRename", function(opts)
+  local new_title = table.concat(opts.fargs, " ")
+  local file      = vim.fn.expand('%:p')
+  vim.fn.system({'bash', '/path/to/zk-mass-rename.sh'}, file .. '\0')
+end, { nargs = "+" })
 
