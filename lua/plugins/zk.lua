@@ -15,6 +15,7 @@ return {
             },
     	})
         --require('telescope').load_extension('zk')
+        require("utils.zk_commands")
     end,
 }
 

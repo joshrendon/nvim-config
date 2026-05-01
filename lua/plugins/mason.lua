@@ -11,7 +11,8 @@ return {
             ensure_installed =
             {
                 "lua_ls",
-                "marksman"
+                "marksman",
+                "verible"
             },
             handlers = {
                 function(server_name)

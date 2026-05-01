@@ -174,3 +174,7 @@ end, { expr = true, silent =  true })
 
 vim.api.nvim_set_keymap("v", "<leader>mi", [[:'<,'>w !llm -m gpt-3.5-turbo "Explain this code"<CR>]], { noremap = true, silent = true })
 
+
+vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, {
+  desc = "LSP Signature Help",
+})

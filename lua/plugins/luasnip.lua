@@ -6,6 +6,7 @@ return {
     "hrsh7th/cmp-buffer",                -- Optional: completion from buffer words
     "hrsh7th/cmp-path",                  -- Optional: file paths
     "rafamadriz/friendly-snippets",      -- Optional: prebuilt snippets
+    "hrsh7th/cmp-nvim-lsp-signature-help", -- Signature help plugin
   },
   config = function()
     local cmp = require("cmp")
@@ -48,6 +49,7 @@ return {
         { name = "luasnip" },
         { name = "buffer" },
         { name = "path" },
+        { name = 'nvim_lsp_signature_help' },
       }),
     })
   end,

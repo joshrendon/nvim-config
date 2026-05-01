@@ -1,11 +1,13 @@
-vim.env.ZK_NOTEBOOK_DIR = vim.fn.expand("/Users/josh/zettelkasten")
+vim.env.ZK_NOTEBOOK_DIR = vim.fn.expand("/home/jrendon/zettelkasten")
 require("config.lazy")
 require("user.options")
 require("user.mappings")
 require("user.colorschemes")
+--require("utils.zk_commands")
 require("utils.zk_highlight")
 require("utils.zk_debug_log")
 
+vim.lsp.enable('lua_ls', 'pyright', 'marksman')
 vim.api.nvim_set_hl(0, "@test.reference.markdown_inline", { link = "Identifier" })
 vim.api.nvim_set_hl(0, "@test.literal.markdown_inline", { link = "Comment" })
 -- Optinal to emphasize wiki links more
@@ -63,3 +65,37 @@ vim.api.nvim_create_user_command("ZkRename", function(opts)
   vim.fn.system({'bash', '/path/to/zk-mass-rename.sh'}, file .. '\0')
 end, { nargs = "+" })
 
+vim.api.nvim_create_user_command("ZkEncryptPrivate", function()
+  local file = vim.api.nvim_buf_get_name(0)
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+  -- Check for #private tag
+  local is_private = false
+  for _, line in ipairs(lines) do
+    if line:match("#private") then
+      is_private = true
+      break
+    end
+  end
+
+  if not is_private then
+    print("No #private tag found in this note.")
+    return
+  end
+
+  local age_file = file .. ".age"
+
+  -- Confirm before encrypting
+  vim.ui.input({ prompt = "Encrypt and replace with .age? (y/N): " }, function(input)
+    if input == "y" or input == "Y" then
+      vim.cmd("write")  -- Save current buffer
+      local cmd = string.format('age -p -o "%s" "%s"', age_file, file)
+      os.execute(cmd)
+      os.execute(string.format('shred -u "%s"', file))
+      vim.cmd("edit " .. age_file)
+      print("Encrypted and reloaded: " .. age_file)
+    else
+      print("Encryption aborted.")
+    end
+  end)
+end, {})

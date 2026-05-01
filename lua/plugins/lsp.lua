@@ -1,18 +1,64 @@
 return {
     "https://github.com/neovim/nvim-lspconfig",
     event = {"BufReadPre", "BufNewFile" },
-    config = function()
-        local lspconfig = require("lspconfig")
+    --vim.lsp.enable('lua_ls', 'pyright')
+    vim.filetype.add({extension = {
+        v = "systemverilog",
+        sv = "systemverilog",
+        svh = "systemverilog",
+     },
+    }),
 
-        -- Lua LSP
-        lspconfig.lua_ls.setup({
-            settings = {
-                Lua = {
-                   diagonstics = { globals = { "vim" } },
-                }
+    vim.lsp.config("verible", {
+        cmd = { "verible-verilog-ls",
+                "--rules_config_search",
+                "--rules=-no-tabs"
+        },
+        root_markers = {".git", "verible.filelist"},
+        settings = {
+            verible = {
+                column_limit = 100,
             }
-        })
-        -- Markdown pseudo-LSP: plaintext server (basic completion)
-        lspconfig.marksman.setup({}) -- simple LSP for markdown, optional
-    end,
+        }
+    }),
+
+    vim.lsp.config('lua_ls', {
+      settings = {
+        Lua = {
+          diagonstics = { globals = { "vim" } },
+          runtime = {
+            version = "LuaJIT"
+          }
+        }
+      }
+    }),
+
+    -- Rust
+    vim.lsp.config("rust_analyzer", {
+      settings = {
+        ["rust-analyzer"] = {
+          checkOnSave = true,
+          check = {
+            command = "clippy",
+          },
+          cargo = {
+            allFeatures = true,
+          },
+        },
+      },
+      on_attach = function(client, bufnr)
+          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+      end
+    }),
+
+    -- Markdown
+    vim.lsp.config("marksman", {}),
+
+    -- Enable the servers
+    vim.lsp.enable({
+        "lua_ls",
+        "rust_analyzer",
+        "marksman",
+        "verible"
+    })
 }
