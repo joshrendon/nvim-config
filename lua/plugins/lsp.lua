@@ -51,6 +51,8 @@ return {
       end
     }),
 
+    vim.lsp.config("cclss", {}),
+
     -- Markdown
     vim.lsp.config("marksman", {}),
 
