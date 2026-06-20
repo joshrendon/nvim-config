@@ -21,14 +21,10 @@ return {
             },
             handlers = {
                 function(server_name)
+                    if server_name == "pyright" then return end  -- configured in lsp.lua
                     require("lspconfig")[server_name].setup({})
                 end,
             },
         })
-       vim.lsp.config("pyright", {
-           setup = {
-               capabilities = capabilities,
-           },
-       })
     end,
 }

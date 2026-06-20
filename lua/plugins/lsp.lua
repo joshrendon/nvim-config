@@ -2,7 +2,6 @@ return {
 
     "https://github.com/neovim/nvim-lspconfig",
     event = {"BufReadPre", "BufNewFile" },
-    --vim.lsp.enable('lua_ls', 'pyright')
     vim.filetype.add({extension = {
         v = "systemverilog",
         sv = "systemverilog",
@@ -47,6 +46,21 @@ return {
       }
     }),
 
+    vim.lsp.config("pyright", {
+        cmd = { "pyright-langserver", "--stdio" },
+        filetypes = { "python" },
+        root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" },
+        settings = {
+            python = {
+                analysis = {
+                    autoSearchPaths = true,
+                    diagnosticMode = "openFilesOnly",
+                    useLibraryCodeForTypes = true,
+                },
+            },
+        },
+    }),
+
     -- Rust
     vim.lsp.config("rust_analyzer", {
       settings = {
@@ -73,6 +87,8 @@ return {
         end,
     }),
 
+    vim.api.nvim_set_hl(0, "@lsp.type.type.python", { link = "@type" }),
+    vim.api.nvim_set_hl(0, "@lsp.type.class.python", { link = "@type" }),
     vim.lsp.config("cclss", {}),
 
     -- Markdown
