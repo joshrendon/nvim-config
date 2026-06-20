@@ -7,7 +7,6 @@ require("user.colorschemes")
 require("utils.zk_highlight")
 require("utils.zk_debug_log")
 
-vim.lsp.enable('lua_ls', 'pyright', 'marksman')
 vim.api.nvim_set_hl(0, "@test.reference.markdown_inline", { link = "Identifier" })
 vim.api.nvim_set_hl(0, "@test.literal.markdown_inline", { link = "Comment" })
 -- Optinal to emphasize wiki links more

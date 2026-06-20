@@ -65,6 +65,14 @@ return {
       end
     }),
 
+    vim.api.nvim_create_autocmd("ColorScheme", {
+        pattern = "*",
+        callback = function()
+            vim.api.nvim_set_hl(0, "@lsp.type.type.python", { link = "@type" })
+            vim.api.nvim_set_hl(0, "@lsp.type.class.python", { link = "@type" })
+        end,
+    }),
+
     vim.lsp.config("cclss", {}),
 
     -- Markdown
@@ -75,6 +83,7 @@ return {
         "lua_ls",
         "rust_analyzer",
         "marksman",
+        "pyright",
         "verible",
         "svlangserver"
     })
