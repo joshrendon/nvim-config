@@ -3,7 +3,7 @@ return {
     build = ":TSUpdate",
     config = function()
         require("nvim-treesitter.configs").setup({
-            ensure_installed = {"markdown", "markdown_inline"},
+            ensure_installed = {"markdown", "markdown_inline", "verilog"},
             highlight = {
                 enabled = true,
                 additional_vim_regex_highlighting = { "markdown" },

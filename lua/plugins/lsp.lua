@@ -1,4 +1,5 @@
 return {
+
     "https://github.com/neovim/nvim-lspconfig",
     event = {"BufReadPre", "BufNewFile" },
     --vim.lsp.enable('lua_ls', 'pyright')
@@ -7,6 +8,19 @@ return {
         sv = "systemverilog",
         svh = "systemverilog",
      },
+    }),
+
+    vim.lsp.config('svlangserver', {
+
+      settings = {
+          systemverilog = {
+            includeIndexing     = {"**/*.{v, sv,svh}"},
+            excludeIndexing     = {"test/**/*.sv*"},
+            defines             = {},
+            launchConfiguration = "~/oss-cad-suite/bin/verilator -sv -Wall --lint-only",
+            formatCommand       = "~/oss-cad-suite/bin/verible-verilog-format"
+          },
+      },
     }),
 
     vim.lsp.config("verible", {
@@ -61,6 +75,7 @@ return {
         "lua_ls",
         "rust_analyzer",
         "marksman",
-        "verible"
+        "verible",
+        "svlangserver"
     })
 }

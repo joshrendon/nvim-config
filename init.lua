@@ -99,3 +99,28 @@ vim.api.nvim_create_user_command("ZkEncryptPrivate", function()
     end
   end)
 end, {})
+
+vim.treesitter.language.add(
+    "systemverilog",
+    {path = '/home/jrendon/.local/share/tree-sitter/tree-sitter-systemverilog/systemverilog.so'}
+)
+vim.treesitter.language.register('systemverilog', {'sv'})
+
+vim.api.nvim_create_autocmd('User', { pattern = 'TSUpdate',
+callback = function()
+  require('nvim-treesitter.parsers').systemverilog= {
+    install_info = {
+      path = '~/.local/share/tree-sitter/tree-sitter-systemverilog',
+      location = 'parser', -- only needed if the parser is in subdirectory of a "monorepo"
+      generate = true, -- only needed if repo does not contain pre-generated `src/parser.c`
+      generate_from_json = false, -- only needed if repo does not contain `src/grammar.json` either
+      queries = 'queries/neovim', -- also install queries from given directory
+    },
+  }
+end})
+
+--vim.api.nvim_create_autocmd("BufWritePost", {
+--	pattern = {"*.v", "*.sv"},
+--	callback = function() vim.lsp.buf.format({ async = false }) end,
+--})
+
